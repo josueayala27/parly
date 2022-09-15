@@ -1,11 +1,23 @@
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
+import { useState } from 'react';
 
 export default function Home() {
+  const [participants, setParticipants] = useState([
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ]);
+
   return (
     <div className="h-screen flex p-3 gap-3">
       <div className="flex-1 flex flex-col gap-3">
-        <div className="bg-gray-200 rounded-lg h-full p-3 flex flex-col gap-3">
+        <div className="bg-gray-100 rounded-lg h-full p-3 flex flex-col gap-3">
           <div>
             <h3>UI meeting weekly | week 15</h3>
             <p>20 May 2022</p>
@@ -28,7 +40,7 @@ export default function Home() {
             </div>
           </div>
 
-          <section className=" flex-1 bg-gray-100 grid place-items-center">
+          <section className=" flex-1 bg-gray-200 rounded-lg grid place-items-center">
             Video content
           </section>
 
@@ -53,11 +65,27 @@ export default function Home() {
           </section>
         </div>
       </div>
-      <aside className="w-[360px] grid grid-cols-1 gap-3">
-        <div className="w-full h-full bg-red-400 rounded-lg p-3">
+      <aside className="w-[360px] flex flex-col gap-3">
+        <div className="w-full border rounded-lg p-3 h-[50%] overflow-auto">
           <h4>Participants</h4>
+          <div className="">
+            {participants.map(() => (
+              <article className="flex justify-between items-center">
+                <div className="flex gap-3 items-center mt-4">
+                  <figure className="w-[3rem] aspect-square rounded-lg overflow-hidden">
+                    <img
+                      className="object-cover w-full h-full"
+                      src="https://images.unsplash.com/photo-1663255420366-d5326beca2df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+                      alt="Participant photo"
+                    />
+                  </figure>
+                  Josué Ayala
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
-        <div className="w-full h-full bg-blue-400 rounded-lg p-3">
+        <div className="w-full bg-blue-400 rounded-lg p-3 h-[50%]">
           <h4>Chat</h4>
         </div>
       </aside>
