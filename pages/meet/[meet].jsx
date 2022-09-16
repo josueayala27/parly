@@ -1,18 +1,19 @@
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
+import Participant from '@/components/meet/participant/Participant';
+import Chat from '@/components/meet/chat/Chat';
+import Separator from '@/components/ui/Separator';
+import Tab from '@/components/ui/tab/Tab';
 import { useState } from 'react';
 
 export default function Home() {
-  const [participants, setParticipants] = useState([
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-  ]);
+  const [activeMicrophone, setActiveMicrophone] = useState(false);
+  const [activeVideo, setActiveVideo] = useState(false);
+
+  const tabs = [
+    { label: 'Participants', key: 1, children: <Participant /> },
+    { label: 'Chat', key: 2, children: <Chat /> },
+  ];
 
   return (
     <div className="h-screen flex p-3 gap-3">
@@ -20,7 +21,6 @@ export default function Home() {
         <div className="bg-gray-100 rounded-lg h-full p-3 flex flex-col gap-3">
           <div>
             <h3>UI meeting weekly | week 15</h3>
-            <p>20 May 2022</p>
           </div>
 
           {/* Layout controls */}
@@ -44,50 +44,40 @@ export default function Home() {
             Video content
           </section>
 
+          <Separator />
+
           {/* footer controls */}
           <section className="flex justify-between">
-            <Button>nqv-zgxw-swn</Button>
+            <div className="flex gap-2 items-center">
+              nqv-zgxw-swn
+              <Button icon color="outlined">
+                <Icon name="copy" />
+              </Button>
+            </div>
             <div className="flex gap-1">
-              <Button>
-                <Icon name="microphone" />
+              <Button
+                data-tip="hello"
+                click={() => setActiveMicrophone(!activeMicrophone)}
+                icon
+                color={activeMicrophone ? 'outlined' : 'danger'}>
+                <Icon
+                  name={activeMicrophone ? 'microphone' : 'microphone-off'}
+                />
               </Button>
-              <Button>
-                <Icon name="video-camera" />
-              </Button>
-              <Button>
-                <Icon name="user-group" />
-              </Button>
-              <Button>
-                <Icon name="message" />
+              <Button
+                click={() => setActiveVideo(!activeVideo)}
+                icon
+                color={activeVideo ? 'outlined' : 'danger'}>
+                <Icon name={activeVideo ? 'video-camera' : 'video-off'} />
               </Button>
             </div>
             <Button color="danger">Leave meet</Button>
           </section>
         </div>
       </div>
-      <aside className="w-[360px] flex flex-col gap-3">
-        <div className="w-full border rounded-lg p-3 h-[50%] overflow-auto">
-          <h4>Participants</h4>
-          <div className="">
-            {participants.map(() => (
-              <article className="flex justify-between items-center">
-                <div className="flex gap-3 items-center mt-4">
-                  <figure className="w-[3rem] aspect-square rounded-lg overflow-hidden">
-                    <img
-                      className="object-cover w-full h-full"
-                      src="https://images.unsplash.com/photo-1663255420366-d5326beca2df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-                      alt="Participant photo"
-                    />
-                  </figure>
-                  Josué Ayala
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-        <div className="w-full bg-blue-400 rounded-lg p-3 h-[50%]">
-          <h4>Chat</h4>
-        </div>
+
+      <aside className="w-[360px] rounded-lg">
+        <Tab current={0} items={tabs} />
       </aside>
     </div>
   );
