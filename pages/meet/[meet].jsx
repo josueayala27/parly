@@ -4,25 +4,17 @@ import Participant from '@/components/meet/participant/Participant';
 import Chat from '@/components/meet/chat/Chat';
 import Separator from '@/components/ui/Separator';
 import Tab from '@/components/ui/tab/Tab';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
-import useAxios from '@/hooks/useAxios';
 
 export default function Home() {
   const [activeMicrophone, setActiveMicrophone] = useState(false);
   const [activeVideo, setActiveVideo] = useState(false);
-  const [response, setResponse] = useState([]);
-
-  const { data, loading } = useAxios({ method: 'get', url: '/todos' });
 
   const tabs = [
     { label: 'Participants', key: 1, children: <Participant /> },
     { label: 'Chat', key: 2, children: <Chat /> },
   ];
-
-  useEffect(() => {
-    setResponse(data);
-  }, [data]);
 
   return (
     <>
