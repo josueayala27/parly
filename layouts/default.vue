@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <slot />
-  </div>
+  <LayoutDefaultTheHeader />
+  <main></main>
+  <LayoutDefaultTheFooter />
 </template>
-
-<script setup></script>
