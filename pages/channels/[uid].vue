@@ -1,9 +1,20 @@
 <template>
-  <div class="flex items-center justify-center h-screen bg-black text-white">
-    Hello from index.vue
+  <div class="conversation">
+    <div class="conversation__body">Chat Content...</div>
+    <aside class="conversation__info">Chat Information...</aside>
   </div>
 </template>
 
-<script setup></script>
+<style lang="scss" scoped>
+.conversation {
+  @apply flex gap-3 h-full;
 
-<style></style>
+  &__body {
+    @apply flex-1 bg-white;
+  }
+
+  &__info {
+    @apply w-60 bg-white;
+  }
+}
+</style>

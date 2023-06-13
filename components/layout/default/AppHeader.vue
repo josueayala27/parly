@@ -1,13 +1,15 @@
 <template>
-  <header class="header">
-    <nav class="header__navigation">
-      <p class="header__logo">Parly</p>
+  <header class="app-header">
+    <nav class="app-header__navigation">
+      <p class="app-header__logo">Parly</p>
 
-      <div class="header__actions">
+      <div class="app-header__actions">
         <UiAvatar />
-        <div class="header__labels">
+        <div class="app-header__labels">
           <UiCaption>Josué Ayala</UiCaption>
-          <UiCaption class="header__labels--accent" size="sm">Online</UiCaption>
+          <UiCaption class="app-header__labels--accent" size="sm">
+            Online
+          </UiCaption>
         </div>
       </div>
     </nav>
@@ -15,7 +17,7 @@
 </template>
 
 <style lang="scss" scoped>
-.header {
+.app-header {
   @apply py-4 px-6 bg-white border-b;
 
   &__navigation {
@@ -28,7 +30,7 @@
 
   &__actions {
     @apply flex items-center gap-4;
-    .header__labels {
+    .app-header__labels {
       &--accent {
         @apply text-blue-500;
       }
