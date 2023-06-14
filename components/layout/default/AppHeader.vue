@@ -21,7 +21,7 @@
   @apply py-4 px-6 bg-white border-b;
 
   &__navigation {
-    @apply container mx-auto flex justify-between;
+    @apply flex justify-between;
   }
 
   &__logo {

@@ -4,6 +4,6 @@
 
 <style lang="scss" scoped>
 .chats {
-  @apply w-60;
+  @apply w-72 p-3 bg-white;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div class="conversation">
-    <div class="conversation__body">Chat Content...</div>
-    <aside class="conversation__info">Chat Information...</aside>
+    <div class="conversation__body">
+      <ChatHead />
+    </div>
+    <ChatInformation />
   </div>
 </template>
 
@@ -10,11 +12,7 @@
   @apply flex gap-3 h-full;
 
   &__body {
-    @apply flex-1 bg-white;
-  }
-
-  &__info {
-    @apply w-60 bg-white;
+    @apply flex-1 bg-white rounded-lg overflow-hidden;
   }
 }
 </style>
