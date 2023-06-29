@@ -4,4 +4,5 @@ export default <Partial<Config>>{
   theme: {
     extend: {},
   },
+  plugins: [require("tailwind-scrollbar-hide")],
 };
