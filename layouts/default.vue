@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout">
     <LayoutDefaultAppHeader />
-    <div class="app-layout__content">
+    <div class="app-layout__content overflow-hidden">
       <LayoutDefaultAppChats />
       <main class="app-layout__body">
         <slot />
@@ -15,7 +15,7 @@
   @apply h-screen overflow-hidden flex flex-col;
 
   &__content {
-    @apply flex gap-3 p-3 flex-1 bg-gray-100;
+    @apply flex gap-3 p-3 flex-1 bg-green-100;
     &__conversation {
       @apply flex-1;
     }
