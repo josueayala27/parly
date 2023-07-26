@@ -15,7 +15,7 @@
   @apply h-screen overflow-hidden flex flex-col;
 
   &__content {
-    @apply flex gap-3 p-3 flex-1 bg-green-100;
+    @apply flex gap-3 p-3 flex-1 bg-blue-50;
     &__conversation {
       @apply flex-1;
     }

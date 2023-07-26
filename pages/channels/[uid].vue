@@ -1,6 +1,6 @@
 <template>
   <div class="flex gap-3 h-full">
-    <div class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 flex-1">
       <div class="flex-1 bg-white rounded-lg overflow-hidden">
         <ChatHead />
         <Chat />
