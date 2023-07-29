@@ -6,7 +6,7 @@
       <div class="app-header__actions">
         <UiAvatar />
         <div class="app-header__labels">
-          <UiCaption>{{ user }}</UiCaption>
+          <UiCaption>{{ user.full_name }}</UiCaption>
           <UiCaption class="app-header__labels--accent" size="sm">
             Online
           </UiCaption>
@@ -17,10 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/store/auth";
-
-const { user } = storeToRefs(useAuthStore());
+const { user } = useAuth();
 </script>
 
 <style lang="scss" scoped>

@@ -25,13 +25,12 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import GoogleIcon from "@/assets/svg/login/google.svg";
 
-const authCookie = useCookie("auth");
-const router = useRouter();
+const { login } = useAuth();
 
 /**
  * SignIn token generator.
  */
-const signWithPopup = async (): Promise<string> => {
+const generateGoogleToken = async (): Promise<string> => {
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -46,25 +45,13 @@ const signWithPopup = async (): Promise<string> => {
  * Handle authentication with google token.
  */
 const handleAuth = async () => {
-  const token: string = await signWithPopup();
+  const token: string = await generateGoogleToken();
 
-  const appToken = await useApi<{ token: string }>("auth/google", {
-    method: "POST",
-    body: { token },
-  });
-
-  authCookie.value = appToken.token;
-  router.push({ path: "/" });
+  await login(token);
 };
 
 definePageMeta({
   layout: "auth",
-  middleware: function () {
-    const cookie = useCookie("auth");
-
-    if (cookie.value) {
-      return navigateTo("/");
-    }
-  },
+  middleware: ["login"],
 });
 </script>
