@@ -24,7 +24,10 @@
     "vite-svg-loader": "^4.0.0"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "firebase": "^10.1.0",
     "nuxt-icon": "^0.4.1",
+    "pinia": "^2.1.6",
     "tailwind-scrollbar-hide": "^1.1.7"
   }
 }

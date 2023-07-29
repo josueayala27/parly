@@ -22,14 +22,49 @@
 </template>
 
 <script setup lang="ts">
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import GoogleIcon from "@/assets/svg/login/google.svg";
+
+const authCookie = useCookie("auth");
 const router = useRouter();
 
-const handleAuth = () => {
+/**
+ * SignIn token generator.
+ */
+const signWithPopup = async (): Promise<string> => {
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  const result = await signInWithPopup(auth, provider);
+  const credential = GoogleAuthProvider.credentialFromResult(result);
+  const token = credential?.accessToken;
+
+  return token as string;
+};
+
+/**
+ * Handle authentication with google token.
+ */
+const handleAuth = async () => {
+  const token: string = await signWithPopup();
+
+  const appToken = await useApi<{ token: string }>("auth/google", {
+    method: "POST",
+    body: { token },
+  });
+
+  authCookie.value = appToken.token;
   router.push({ path: "/" });
 };
 
 definePageMeta({
   layout: "auth",
+  middleware: function () {
+    const cookie = useCookie("auth");
+
+    if (cookie.value) {
+      return navigateTo("/");
+    }
+  },
 });
 </script>
