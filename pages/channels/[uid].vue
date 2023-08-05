@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-3 flex-1">
       <div class="flex-1 bg-white rounded-lg overflow-hidden">
         <ChatHead />
-        <Chat />
+        <Chat :messages="messages" />
       </div>
       <div class="px-6 py-2 bg-white rounded-lg flex items-center gap-6">
         <div class="flex items-center gap-4">
@@ -25,7 +25,16 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute();
+
+const { data: messages } = await useAsyncData(`chat:${route.params.uid}`, () =>
+  useApi<Array<any>>(`/channels/${route.params.uid}/messages`)
+);
+
+console.log(messages.value);
+
 definePageMeta({
   middleware: ["auth"],
+  keepalive: true,
 });
 </script>

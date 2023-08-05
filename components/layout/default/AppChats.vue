@@ -5,20 +5,25 @@
       <RouterLink
         v-for="(chat, cid) in chats"
         :key="cid"
-        :to="`/channels/${['chat.name']}`"
+        :to="`/channels/${chat.id}`"
         class="rounded-lg p-4 hover:bg-gray-100 cursor-pointer duration-300"
       >
         <div class="flex gap-4">
-          <UiAvatar size="medium" />
+          <UiAvatar
+            :src="chat.is_group ? chat.image : chat.chat_whit?.avatar"
+            size="medium"
+          />
           <div class="flex flex-col overflow-hidden flex-1">
             <div class="flex gap-2 items-center">
               <UiCaption class="font-bold flex-1 truncate" size="base">
                 {{
-                  chat.chat_whit?.full_name || chat.channel_name || "Group Chat"
+                  chat.is_group
+                    ? chat.channel_name
+                    : chat.message_author?.full_name
                 }}
               </UiCaption>
               <UiCaption size="sm" class="truncate text-gray-700">
-                {{ "chat.create_at" }}
+                {{ $dayjs(chat.created_at).format("HH:mm") }}
               </UiCaption>
             </div>
             <UiCaption class="truncate text-gray-700">

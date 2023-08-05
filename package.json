@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
+    "dayjs": "^1.11.9",
     "firebase": "^10.1.0",
     "nuxt-icon": "^0.4.1",
     "pinia": "^2.1.6",
