@@ -1,14 +1,12 @@
 import { io, Socket } from "socket.io-client";
 
 export default function useSocket() {
-  const { $config } = useNuxtApp();
+  const { $config, $notify } = useNuxtApp();
   const socket = useState<Socket>("io");
   const { token } = useAuth();
 
-  const getUserEvents = () => {
-    socket.value.on("message:get", (val) => {
-      console.log(val);
-    });
+  const getEvent = (event: string, callback: (...args: any[]) => void) => {
+    socket.value.on(event, callback);
   };
 
   /**
@@ -19,11 +17,14 @@ export default function useSocket() {
       transports,
       query: { token: token.value },
     });
+
     socket.value.on("connect", () => {
       console.log(socket.value.id);
-      getUserEvents();
+      getEvent("message:get", ({ message }) => {
+        $notify(message);
+      });
     });
   };
 
-  return { init, socket };
+  return { init, socket, getEvent };
 }

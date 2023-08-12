@@ -19,7 +19,7 @@ export default function useChat() {
 
   const sendMessage = async (message: string, channel: string) => {
     try {
-      const res = await useApi("channels/25/messages", {
+      const res = await useApi(`channels/${channel}/messages`, {
         method: "POST",
         body: {
           content: message,

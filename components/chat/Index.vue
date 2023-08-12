@@ -1,5 +1,8 @@
 <template>
-  <div class="p-6 flex flex-col gap-6 overflow-auto flex-1 scrollbar-hide">
+  <div
+    ref="content"
+    class="p-6 flex flex-col gap-6 overflow-auto flex-1 scrollbar-hide"
+  >
     <template
       v-for="({ user, created_at, count_likes, ...message }, i) in messages"
       :key="i"
@@ -25,11 +28,23 @@
       </ChatMessage>
       <!-- <ChatMessageSeparator /> -->
     </template>
+    <div id="a" ref="bottom" />
   </div>
 </template>
 
 <script lang="ts" setup>
 // const component = resolveComponent("ChatMessageDocument");
+const { $gsap } = useNuxtApp();
+
+const content = ref(null);
+const bottom = ref();
+
+onMounted(() => {
+  console.log(content.value);
+  $gsap.to(content.value, {
+    scrollTo: bottom.value,
+  });
+});
 
 defineProps<{ messages: Array<any> }>();
 </script>

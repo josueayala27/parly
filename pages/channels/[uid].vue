@@ -26,16 +26,25 @@
 <script setup lang="ts">
 const route = useRoute();
 const { sendMessage } = useChat();
+// const { getEvent } = useSocket();
+
+const channelId = ref<string>(String(route.params.uid));
 
 const { data: messages } = await useAsyncData<any>(
-  `chat:${route.params.uid}`,
-  () => useApi<Array<any>>(`/channels/${route.params.uid}/messages`)
+  `chat:${channelId.value}`,
+  () => useApi<Array<any>>(`/channels/${channelId.value}/messages`)
 );
 
 const message = ref<string>("Hello, I'm a message.");
 const handleSendMessage = () => {
-  sendMessage(message.value!, String(route.params.uid));
+  sendMessage(message.value!, String(channelId.value));
 };
+
+onMounted(() => {
+  // getEvent(`channel:${channelId.value}`, (event) => {
+  //   console.log(event);
+  // });
+});
 
 definePageMeta({
   middleware: ["auth", "socket"],
