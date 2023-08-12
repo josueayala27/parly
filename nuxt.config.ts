@@ -19,6 +19,4 @@ export default defineNuxtConfig({
       API_URL: process.env.API_URL,
     },
   },
-
-  plugins: ["~/plugins/firebase.client.ts", "~/plugins/dayjs.ts"],
 });

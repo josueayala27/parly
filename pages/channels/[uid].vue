@@ -10,10 +10,11 @@
           <Icon size="24px" name="uil:paperclip" />
         </div>
         <input
+          v-model="message"
           class="flex-1 py-2 px-4 border rounded-lg outline-none"
           type="text"
           placeholder="Write a message here"
-          value="What a nice song"
+          @keypress.enter="handleSendMessage"
         />
         <div>
           <Icon size="24px" name="uil:microphone" />
@@ -26,15 +27,20 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const { sendMessage } = useChat();
 
-const { data: messages } = await useAsyncData(`chat:${route.params.uid}`, () =>
-  useApi<Array<any>>(`/channels/${route.params.uid}/messages`)
+const { data: messages } = await useAsyncData<any>(
+  `chat:${route.params.uid}`,
+  () => useApi<Array<any>>(`/channels/${route.params.uid}/messages`)
 );
 
-console.log(messages.value);
+const message = ref<string>("Hello, I'm a message.");
+const handleSendMessage = () => {
+  sendMessage(message.value!, String(route.params.uid));
+};
 
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth", "socket"],
   keepalive: true,
 });
 </script>

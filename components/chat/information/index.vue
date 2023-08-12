@@ -1,23 +1,29 @@
 <template>
   <aside class="chat-info w-72 flex-shrink-0 flex flex-col bg-white rounded-lg">
-    <ChatInformationSection title="Contact Information">
+    <ChatInformationSection
+      :title="`${data?.is_group ? 'Group' : 'Contact'} Information`"
+    >
       <template #action>
         <icon size="20px" name="uil:ellipsis-h" />
       </template>
     </ChatInformationSection>
-
     <ChatInformationSection class="chat-info__section">
       <ChatInformationItem
+        v-if="!data?.is_group"
         class="chat-info__username"
         title="username"
         description="@josue_ayala27"
       />
 
-      <ChatInformationItem title="mobile" description="(503) 2531 2362" />
+      <ChatInformationItem
+        v-if="!data?.is_group"
+        title="mobile"
+        description="(503) 2531 2362"
+      />
 
       <ChatInformationItem
         title="description"
-        description="Join us if u wanna work together 😈"
+        :description="data?.description || 'No description provided yet.'"
       />
     </ChatInformationSection>
 
@@ -61,6 +67,18 @@
     </ChatInformationSection>
   </aside>
 </template>
+
+<script setup lang="ts">
+const route = useRoute();
+
+const { data } = await useAsyncData<{ description: string; is_group: boolean }>(
+  "channel:" + route.params.uid,
+  () => useApi(`channels/${route.params.uid}`),
+  { lazy: true }
+);
+
+console.log(data);
+</script>
 
 <style lang="scss">
 .chat-info {

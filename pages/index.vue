@@ -1,9 +1,9 @@
 <template>
-  <div></div>
+  <div>Home!</div>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  middleware: ["auth"],
+  middleware: ["auth", "socket"],
 });
 </script>
