@@ -30,6 +30,7 @@
     "nuxt-icon": "^0.4.1",
     "pinia": "^2.1.6",
     "socket.io-client": "^4.7.2",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "vee-validate": "^4.11.1"
   }
 }

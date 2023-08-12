@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 flex flex-col gap-6">
+  <div class="p-6 flex flex-col gap-6 overflow-auto flex-1 scrollbar-hide">
     <template
       v-for="({ user, created_at, count_likes, ...message }, i) in messages"
       :key="i"

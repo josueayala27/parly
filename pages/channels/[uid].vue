@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-3 h-full">
     <div class="flex flex-col gap-3 flex-1">
-      <div class="flex-1 bg-white rounded-lg overflow-hidden">
+      <div class="flex-1 bg-white rounded-lg overflow-hidden flex flex-col">
         <ChatHead />
         <Chat :messages="messages" />
       </div>
@@ -9,10 +9,8 @@
         <div class="flex items-center gap-4">
           <Icon size="24px" name="uil:paperclip" />
         </div>
-        <input
+        <UiInput
           v-model="message"
-          class="flex-1 py-2 px-4 border rounded-lg outline-none"
-          type="text"
           placeholder="Write a message here"
           @keypress.enter="handleSendMessage"
         />

@@ -1,5 +1,10 @@
 <template>
   <aside class="chats">
+    <div class="flex gap-3">
+      <UiInput v-model="ha" class="flex-1" placeholder="Busca un chat." />
+      <div>i</div>
+    </div>
+
     <span v-if="isLoading">Loading...</span>
     <template v-else>
       <RouterLink
@@ -39,6 +44,7 @@
 <script lang="ts" setup>
 import { LastChat } from "@/interfaces/chat.interface";
 
+const ha = ref<string>("");
 const isLoading = ref<boolean>(true);
 const chats = ref<LastChat[]>([]);
 
