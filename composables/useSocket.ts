@@ -19,7 +19,6 @@ export default function useSocket() {
     });
 
     socket.value.on("connect", () => {
-      console.log(socket.value.id);
       getEvent("message:get", ({ message }) => {
         $notify(message);
       });

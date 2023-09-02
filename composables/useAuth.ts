@@ -40,8 +40,19 @@ export default function () {
       await me();
 
       router.push({ path: "/" });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  return { user, login, me, token };
+  const getSocketIds = async () => {
+    try {
+      const ids = await useApi<number[]>("channels");
+      console.log(ids);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return { user, login, me, getSocketIds, token };
 }

@@ -42,6 +42,7 @@ const bottom = ref();
 onMounted(() => {
   console.log(content.value);
   $gsap.to(content.value, {
+    duration: 0,
     scrollTo: bottom.value,
   });
 });

@@ -49,5 +49,7 @@ onMounted(() => {
 definePageMeta({
   middleware: ["auth", "socket"],
   keepalive: true,
+  scrollToTop: false,
+  key: (route) => `channel:${route.params.uid}`,
 });
 </script>
