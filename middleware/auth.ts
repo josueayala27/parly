@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware(async (_, _from) => {
   const authCookie = useCookie("auth");
-  const { me, getSocketIds } = useAuth();
+  const { me } = useAuth();
 
   /**
    * Skip client side.
@@ -10,5 +10,4 @@ export default defineNuxtRouteMiddleware(async (_, _from) => {
   if (!authCookie.value) return navigateTo("/login");
 
   await me();
-  await getSocketIds();
 });

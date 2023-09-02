@@ -28,7 +28,6 @@
       </ChatMessage>
       <!-- <ChatMessageSeparator /> -->
     </template>
-    <div id="a" ref="bottom" />
   </div>
 </template>
 
@@ -39,8 +38,18 @@ const { $gsap } = useNuxtApp();
 const content = ref(null);
 const bottom = ref();
 
+const writeHello = () => {
+  $gsap.to(content.value, {
+    duration: 0,
+    scrollTo: bottom.value,
+  });
+};
+
+defineExpose({
+  writeHello,
+});
+
 onMounted(() => {
-  console.log(content.value);
   $gsap.to(content.value, {
     duration: 0,
     scrollTo: bottom.value,

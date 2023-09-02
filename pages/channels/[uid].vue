@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-3 flex-1">
       <div class="flex-1 bg-white rounded-lg overflow-hidden flex flex-col">
         <ChatHead />
-        <Chat :messages="messages" />
+        <Chat ref="chat" :messages="messages" />
       </div>
       <div class="px-6 py-2 bg-white rounded-lg flex items-center gap-6">
         <div class="flex items-center gap-4">
@@ -24,32 +24,46 @@
 </template>
 
 <script setup lang="ts">
+import ChatComponent from "@/components/chat/Index.vue";
+
 const route = useRoute();
-const { sendMessage } = useChat();
-// const { getEvent } = useSocket();
+const { sendMessage, generateTempMessage } = useChat();
 
 const channelId = ref<string>(String(route.params.uid));
 
-const { data: messages } = await useAsyncData<any>(
-  `chat:${channelId.value}`,
-  () => useApi<Array<any>>(`/channels/${channelId.value}/messages`)
+const chat = ref<InstanceType<typeof ChatComponent> | null>(null);
+const messages = ref<any>([]);
+const message = ref<string>("");
+
+/**
+ * Retrieve channel messages.
+ */
+const { data } = await useAsyncData<any>(`chat:${channelId.value}`, () =>
+  useApi<Array<any>>(`/channels/${channelId.value}/messages`)
 );
 
-const message = ref<string>("Hello, I'm a message.");
+messages.value = data.value.map((message: any) => ({
+  ...message,
+  is_temp: false,
+}));
+
+/**
+ * Send channel message.
+ */
 const handleSendMessage = () => {
   sendMessage(message.value!, String(channelId.value));
+  messages.value.push(generateTempMessage(message.value));
+  message.value = "";
+
+  chat.value?.writeHello();
 };
 
-onMounted(() => {
-  // getEvent(`channel:${channelId.value}`, (event) => {
-  //   console.log(event);
-  // });
-});
-
+/**
+ * Define page config.
+ */
 definePageMeta({
   middleware: ["auth", "socket"],
   keepalive: true,
-  scrollToTop: false,
   key: (route) => `channel:${route.params.uid}`,
 });
 </script>

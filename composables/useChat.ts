@@ -21,9 +21,7 @@ export default function useChat() {
     try {
       const res = await useApi(`channels/${channel}/messages`, {
         method: "POST",
-        body: {
-          content: message,
-        },
+        body: { content: message },
       });
 
       socket.value.emit("message:send", {
@@ -37,5 +35,21 @@ export default function useChat() {
     }
   };
 
-  return { getLastMessages, sendMessage, data };
+  const generateTempMessage = (message: string) => {
+    return {
+      is_temp: true,
+      content: message,
+      count_likes: 0,
+      user: {
+        id: 1,
+        full_name: "Josué Ayala",
+        username: "ayalavalencia11@gmail.com",
+        avatar:
+          "https://lh3.googleusercontent.com/a/AAcHTtcZ7EF2H3kCFABCEe5d0n0CoDzACHYf6LnR0fkvH26l-L6P=s96-c",
+        email: "ayalavalencia11@gmail.com",
+      },
+    };
+  };
+
+  return { getLastMessages, sendMessage, generateTempMessage, data };
 }
