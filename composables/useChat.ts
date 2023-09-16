@@ -17,19 +17,21 @@ export default function useChat() {
     } catch (error) {}
   };
 
-  const sendMessage = async (message: string, channel: string) => {
+  /**
+   * Temp message.
+   * @param message
+   * @param channel
+   */
+  const sendMessage = async <T>(message: string, channel: string) => {
     try {
-      const res = await useApi(`channels/${channel}/messages`, {
+      const _message = await useApi<T>(`channels/${channel}/messages`, {
         method: "POST",
         body: { content: message },
       });
 
-      socket.value.emit("message:send", {
-        channel,
-        message,
-      });
+      socket.value.emit("message:send", channel, _message);
 
-      console.log(res);
+      return _message;
     } catch (error) {
       console.log(error);
     }

@@ -30,5 +30,9 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{ fullName: string; createdAt: string; likes: number }>();
+defineProps<{
+  fullName: string;
+  createdAt: string;
+  likes: number;
+}>();
 </script>

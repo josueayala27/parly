@@ -3,7 +3,9 @@
     <div class="flex flex-col gap-3 flex-1">
       <div class="flex-1 bg-white rounded-lg overflow-hidden flex flex-col">
         <ChatHead />
-        <Chat ref="chat" :messages="messages" />
+        <template v-if="pending"> Loading... </template>
+
+        <Chat v-else ref="chat" :messages="data" />
       </div>
       <div class="px-6 py-2 bg-white rounded-lg flex items-center gap-6">
         <div class="flex items-center gap-4">
@@ -27,36 +29,47 @@
 import ChatComponent from "@/components/chat/Index.vue";
 
 const route = useRoute();
-const { sendMessage, generateTempMessage } = useChat();
+const { socket } = useSocket();
+const { sendMessage } = useChat();
 
 const channelId = ref<string>(String(route.params.uid));
 
 const chat = ref<InstanceType<typeof ChatComponent> | null>(null);
-const messages = ref<any>([]);
 const message = ref<string>("");
 
 /**
  * Retrieve channel messages.
  */
-const { data } = await useAsyncData<any>(`chat:${channelId.value}`, () =>
-  useApi<Array<any>>(`/channels/${channelId.value}/messages`)
+const { data, pending } = await useAsyncData<any>(
+  `chat:${channelId.value}`,
+  async () => {
+    const api = await useApi<Array<any>>(
+      `/channels/${channelId.value}/messages`
+    );
+    return api.map((message: any) => ({
+      ...message,
+      is_temp: false,
+    }));
+  },
+  { lazy: true }
 );
-
-messages.value = data.value.map((message: any) => ({
-  ...message,
-  is_temp: false,
-}));
 
 /**
  * Send channel message.
  */
-const handleSendMessage = () => {
-  sendMessage(message.value!, String(channelId.value));
-  messages.value.push(generateTempMessage(message.value));
+const handleSendMessage = async () => {
+  const msg = await sendMessage<any>(message.value!, String(channelId.value));
+  data.value.push(msg);
   message.value = "";
 
-  chat.value?.writeHello();
+  // chat.value?.writeHello();
 };
+
+onMounted(() => {
+  socket.value.on("message:get", (msg) => {
+    data.value.push(msg);
+  });
+});
 
 /**
  * Define page config.

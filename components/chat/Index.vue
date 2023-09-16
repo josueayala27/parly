@@ -1,7 +1,7 @@
 <template>
   <div
     ref="content"
-    class="p-6 flex flex-col gap-6 overflow-auto flex-1 scrollbar-hide"
+    class="p-6 flex flex-col gap-3 overflow-auto flex-1 scrollbar-hide"
   >
     <template
       v-for="({ user, created_at, count_likes, ...message }, i) in messages"
@@ -12,7 +12,9 @@
         :created-at="created_at"
         :full-name="user?.full_name"
       >
-        <UiCaption class="text-gray-700">
+        <UiCaption
+          :class="[!message.is_temp ? 'text-gray-700' : 'text-red-500']"
+        >
           {{ message.content }}
         </UiCaption>
 
@@ -45,6 +47,9 @@ const writeHello = () => {
   });
 };
 
+/**
+ * Expose methods to use with refs.
+ */
 defineExpose({
   writeHello,
 });

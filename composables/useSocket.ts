@@ -1,7 +1,7 @@
 import { io, Socket } from "socket.io-client";
 
 export default function useSocket() {
-  const { $config, $notify } = useNuxtApp();
+  const { $config } = useNuxtApp();
   const socket = useState<Socket>("io");
   const { token } = useAuth();
 
@@ -16,12 +16,6 @@ export default function useSocket() {
     socket.value = io($config.public.API_URL, {
       transports,
       query: { token: token.value },
-    });
-
-    socket.value.on("connect", () => {
-      getEvent("message:get", ({ message }) => {
-        $notify(message);
-      });
     });
   };
 
